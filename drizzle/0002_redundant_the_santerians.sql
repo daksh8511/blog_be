@@ -1,0 +1,1 @@
+ALTER TABLE "blogs" RENAME COLUMN "author" TO "authorId";

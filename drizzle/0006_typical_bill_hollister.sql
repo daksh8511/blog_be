@@ -1,0 +1,2 @@
+ALTER TABLE "blogs" ADD CONSTRAINT "blogs_authorId_create_table_id_fk" FOREIGN KEY ("authorId") REFERENCES "public"."create_table"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "blogs" DROP COLUMN "comment";

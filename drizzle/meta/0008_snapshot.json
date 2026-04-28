@@ -1,0 +1,144 @@
+{
+  "id": "8dba7723-dac6-47ec-8d3e-5bc86a2f8d1e",
+  "prevId": "16a25f26-9789-4471-8481-11ab2654a404",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.create_table": {
+      "name": "create_table",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "create_at": {
+          "name": "create_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "create_table_email_unique": {
+          "name": "create_table_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.blogs": {
+      "name": "blogs",
+      "schema": "",
+      "columns": {
+        "blogid": {
+          "name": "blogid",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "create_at": {
+          "name": "create_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "content": {
+          "name": "content",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "authorid": {
+          "name": "authorid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "likes": {
+          "name": "likes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'technology'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "blogs_authorid_create_table_id_fk": {
+          "name": "blogs_authorid_create_table_id_fk",
+          "tableFrom": "blogs",
+          "tableTo": "create_table",
+          "columnsFrom": [
+            "authorid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

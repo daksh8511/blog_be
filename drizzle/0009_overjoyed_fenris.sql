@@ -1,0 +1,1 @@
+ALTER TABLE "blogs" RENAME COLUMN "category" TO "blog_category";
