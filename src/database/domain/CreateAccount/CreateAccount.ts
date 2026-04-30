@@ -43,6 +43,7 @@ const CreateAccount = async (app: any, option: any) => {
           id: user!.id,
           email: user!.email,
         });
+        
 
         return reply.status(201).send({
           msg: "Account created successfully",
