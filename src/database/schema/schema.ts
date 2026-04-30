@@ -22,5 +22,6 @@ export const BlogSchema = pgTable("blogs", {
     likes: integer("likes").default(0),
     status: varchar("status").notNull().default("draft"),
     blog_category: varchar("blog_category"),
-    blog_title : varchar('blog_title').notNull().default('Hello world')
+    blog_title : varchar('blog_title').notNull().default('Hello world'),
+    blog_views : integer('blog_views').default(0)
 });

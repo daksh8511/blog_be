@@ -10,7 +10,7 @@ import UploadEditBlog from '../database/domain/UploadEditBlog/UploadEditBlog.js'
 const app = fastify({ logger: false })
 
 app.register(cors, {
-    methods : ['POST'],
+    methods : ['POST','DELETE'],
     origin : 'http://localhost:5173'
 })
 
