@@ -6,7 +6,10 @@ export const AuthSchema = pgTable('create_table', {
     name : varchar('name').notNull(),
     email : varchar('email').notNull().unique(),
     password : varchar('password').notNull(),
-    create_at : timestamp().defaultNow()
+    create_at : timestamp().defaultNow(),
+    followers : integer('followers').default(0),
+    about_us : varchar('about_us'),
+    interest_category : varchar('interest_category')
 })
 
 
