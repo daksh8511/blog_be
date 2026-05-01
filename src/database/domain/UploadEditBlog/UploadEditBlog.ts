@@ -7,10 +7,10 @@ const UploadEditBlog = async (app: any, options: any) => {
   app.post(
     "/upload_blog",
     async (
-      req: FastifyRequest<{ Body: { content: any; authorid: number } }>,
+      req: FastifyRequest<{ Body: { content: any; authorid: number; status : string; blog_title : string } }>,
       reply: FastifyReply,
     ) => {
-      const { content, authorid } = req.body;
+      const { content, authorid, status, blog_title } = req.body;
 
       if (!content) {
         return reply
@@ -27,7 +27,7 @@ const UploadEditBlog = async (app: any, options: any) => {
       try {
         const CreateBlog = await db
           .insert(BlogSchema)
-          .values({ content, authorid })
+          .values({ content, authorid, blog_title, status })
           .returning();
 
         if (CreateBlog.length === 0) {
@@ -52,12 +52,12 @@ const UploadEditBlog = async (app: any, options: any) => {
     async (
       req: FastifyRequest<{
         Params: { blogid: string };
-        Body: { content: string };
+        Body: { content: string, status : string };
       }>,
       reply: FastifyReply,
     ) => {
       const { blogid } = req.params;
-      const { content } = req.body;
+      const { content, status } = req.body;
       const BlogIdInNumber = Number(blogid);
 
       if (!BlogIdInNumber) {
@@ -78,13 +78,13 @@ const UploadEditBlog = async (app: any, options: any) => {
             .send({ msg: "Blog are not found", success: false });
         }
 
-        const editedBlog = await db
+        await db
           .update(BlogSchema)
-          .set({ content: content })
+          .set({ content: content, status })
           .where(eq(BlogSchema.blogid, BlogIdInNumber))
           .returning();
 
-        console.log(editedBlog);
+          return reply.status(201).send({msg : 'Story update successfully', success : true})
       } catch (error) {
         console.error("server side error : ", error);
         return reply
@@ -176,6 +176,26 @@ const UploadEditBlog = async (app: any, options: any) => {
       }
     },
   );
+
+  app.get('/get_single_blog/:blogid', async(req : FastifyRequest<{Params : {blogid : string}}>, reply : FastifyReply) => {
+    const {blogid} = req.params;
+    const blogidInNumber = Number(blogid)
+
+    if(!blogidInNumber){
+      return reply.status(401).send({msg : "Blog id is not there", success : false})
+    }
+
+    try {
+      const findBlog = await db.select().from(BlogSchema).where(eq(BlogSchema.blogid, blogidInNumber))
+      if(findBlog.length === 0){
+        return reply.status(400).send({msg : 'Blog are not found', success : false})
+      }
+      return reply.status(200).send({msg : 'Blog are successfully fetch', success : true, findBlog})
+    } catch (error) {
+      console.error("Error : ", error)
+      return reply.status(500).send({msg : 'Server side error', success : false})
+    }
+  })
 };
 
 export default UploadEditBlog;
