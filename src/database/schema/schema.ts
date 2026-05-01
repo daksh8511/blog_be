@@ -26,5 +26,6 @@ export const BlogSchema = pgTable("blogs", {
     status: varchar("status").notNull().default("draft"),
     blog_category: varchar("blog_category").default('Other'),
     blog_title : varchar('blog_title').notNull().default('Hello world'),
-    blog_views : integer('blog_views').default(0)
+    blog_views : integer('blog_views').default(0),
+    blog_cover_image : varchar('blog_cover_image').notNull().default('')
 });

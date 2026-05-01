@@ -1,0 +1,1 @@
+ALTER TABLE "blogs" ADD COLUMN "blog_cover_image" varchar NOT NULL;
