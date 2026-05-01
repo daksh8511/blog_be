@@ -1,1 +1,0 @@
-ALTER TABLE "blogs" RENAME COLUMN "id" TO "blogid";

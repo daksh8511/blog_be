@@ -1,1 +1,0 @@
-ALTER TABLE "blogs" ALTER COLUMN "blog_cover_image" SET DEFAULT '';

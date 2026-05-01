@@ -1,5 +1,5 @@
 {
-  "id": "653ec4b9-7069-4ec2-9015-122b3e8f909b",
+  "id": "0d29f2a4-3488-4907-a23e-f34db3d514f8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -31,6 +31,32 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "create_at": {
+          "name": "create_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "followers": {
+          "name": "followers",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "about_us": {
+          "name": "about_us",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "interest_category": {
+          "name": "interest_category",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -45,6 +71,100 @@
           ]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.blogs": {
+      "name": "blogs",
+      "schema": "",
+      "columns": {
+        "blogid": {
+          "name": "blogid",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "create_at": {
+          "name": "create_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "content": {
+          "name": "content",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "authorid": {
+          "name": "authorid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "likes": {
+          "name": "likes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "blog_category": {
+          "name": "blog_category",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Other'"
+        },
+        "blog_title": {
+          "name": "blog_title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Hello world'"
+        },
+        "blog_views": {
+          "name": "blog_views",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "blog_cover_image": {
+          "name": "blog_cover_image",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "blogs_authorid_create_table_id_fk": {
+          "name": "blogs_authorid_create_table_id_fk",
+          "tableFrom": "blogs",
+          "tableTo": "create_table",
+          "columnsFrom": [
+            "authorid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

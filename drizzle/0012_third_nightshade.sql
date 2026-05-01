@@ -1,1 +1,0 @@
-ALTER TABLE "blogs" ADD COLUMN "blog_title" varchar DEFAULT 'Hello world' NOT NULL;

@@ -6,8 +6,3 @@ dist-ssr
 
 # Editor directories and files
 *.env
-
-# Drizzle files
-drizzle/
-drizzle.config.ts
-*.drizzle

@@ -1,1 +1,0 @@
-ALTER TABLE "blogs" ADD COLUMN "blog_views" integer DEFAULT 0;
