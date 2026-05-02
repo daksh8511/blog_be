@@ -17,7 +17,7 @@ export const BlogSchema = pgTable("blogs", {
     blogid: serial("blogid").primaryKey(),
     create_at: timestamp("create_at").defaultNow(),
     content: jsonb("content").notNull(),
-
+    blog_short_description : varchar('blog_short_description'),
     authorid: integer("authorid")
         .notNull()
         .references(() => AuthSchema.id),

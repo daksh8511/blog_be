@@ -1,0 +1,1 @@
+ALTER TABLE "blogs" ADD COLUMN "blog_short_description" varchar;

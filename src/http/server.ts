@@ -6,6 +6,7 @@ import jwt from '@fastify/jwt'
 import cors from '@fastify/cors'
 import CreateAccount from '../database/domain/CreateAccount/CreateAccount.js';
 import UploadEditBlog from '../database/domain/UploadEditBlog/UploadEditBlog.js';
+import HomeBlog from '../database/domain/HomePageBlog/HomeBlog.js';
 
 const app = fastify({ logger: false })
 
@@ -20,6 +21,7 @@ app.register(jwt, {
 
 app.register(CreateAccount, {prefix : '/api'})
 app.register(UploadEditBlog, {prefix : '/api'})
+app.register(HomeBlog, {prefix : '/api'})
 
 const start = async () => {
     try {
