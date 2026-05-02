@@ -15,7 +15,7 @@ const CreateAccount = async (app: any, option: any) => {
       req: FastifyRequest<{ Body: CreateAccountType }>,
       reply: FastifyReply,
     ) => {
-      const { email, name, password,about_us, interest_category } = req.body;
+      const { email, name, password, about_us, interest_category } = req.body;
 
       try {
         const findUser = await db
@@ -34,7 +34,13 @@ const CreateAccount = async (app: any, option: any) => {
 
         const createUser = await db
           .insert(AuthSchema)
-          .values({ name, email, password: hashPassword, about_us, interest_category })
+          .values({
+            name,
+            email,
+            password: hashPassword,
+            about_us,
+            interest_category,
+          })
           .returning();
 
         const user = createUser[0];
@@ -134,12 +140,10 @@ const CreateAccount = async (app: any, option: any) => {
           .where(eq(AuthSchema.email, email));
 
         if (findUser.length > 0) {
-          return reply
-            .status(401)
-            .send({
-              msg: "User are already registered, please login",
-              success: false,
-            });
+          return reply.status(401).send({
+            msg: "User are already registered, please login",
+            success: false,
+          });
         }
 
         return reply
@@ -149,6 +153,55 @@ const CreateAccount = async (app: any, option: any) => {
         return reply
           .status(501)
           .send({ msg: "server side error", success: false });
+      }
+    },
+  );
+
+  app.patch(
+    "/edit_user/:id",
+    async (
+      req: FastifyRequest<{
+        Params: { id: string };
+        Body: { name: string; email: string; about_us: string };
+      }>,
+      reply: FastifyReply,
+    ) => {
+      const { id } = req.params;
+      const { name, email, about_us } = req.body;
+      const idIntoNumber = Number(id);
+
+      if (!id) {
+        return reply
+          .status(401)
+          .send({ msg: "User id are provided", success: false });
+      }
+
+      try {
+        const findUser = await db
+          .select()
+          .from(AuthSchema)
+          .where(eq(AuthSchema.id, idIntoNumber));
+
+        if (findUser.length === 0) {
+          return reply
+            .status(401)
+            .send({ msg: "User not found", success: false });
+        }
+
+        const updateSuccess = await db
+          .update(AuthSchema)
+          .set({ name, email, about_us })
+          .where(eq(AuthSchema.id, Number(findUser[0]?.id)))
+          .returning();
+
+        return reply
+          .status(201)
+          .send({ msg: "User profile update successfully", success: true, user : updateSuccess });
+      } catch (error) {
+        console.error("server side error : ", error);
+        return reply
+          .status(501)
+          .send({ msg: "Server side error", success: false });
       }
     },
   );
