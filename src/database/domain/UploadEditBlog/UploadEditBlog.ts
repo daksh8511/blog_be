@@ -7,10 +7,10 @@ const UploadEditBlog = async (app: any, options: any) => {
   app.post(
     "/upload_blog",
     async (
-      req: FastifyRequest<{ Body: { content: any; authorid: number; status : string; blog_title : string } }>,
+      req: FastifyRequest<{ Body: { content: any; authorid: number; status : string; blog_title : string, blog_category : string, blog_cover_image : string } }>,
       reply: FastifyReply,
     ) => {
-      const { content, authorid, status, blog_title } = req.body;
+      const { content, authorid, status, blog_title, blog_cover_image, blog_category } = req.body;
 
       if (!content) {
         return reply
@@ -27,7 +27,7 @@ const UploadEditBlog = async (app: any, options: any) => {
       try {
         const CreateBlog = await db
           .insert(BlogSchema)
-          .values({ content, authorid, blog_title, status })
+          .values({ content, authorid, blog_title, status, blog_category, blog_cover_image })
           .returning();
 
         if (CreateBlog.length === 0) {
@@ -52,12 +52,12 @@ const UploadEditBlog = async (app: any, options: any) => {
     async (
       req: FastifyRequest<{
         Params: { blogid: string };
-        Body: { content: string, status : string };
+        Body: { content: any, status : string, blog_title?: string, blog_category?: string, blog_cover_image?: string };
       }>,
       reply: FastifyReply,
     ) => {
       const { blogid } = req.params;
-      const { content, status } = req.body;
+      const { content, status, blog_title, blog_category, blog_cover_image } = req.body;
       const BlogIdInNumber = Number(blogid);
 
       if (!BlogIdInNumber) {
@@ -80,7 +80,13 @@ const UploadEditBlog = async (app: any, options: any) => {
 
         await db
           .update(BlogSchema)
-          .set({ content: content, status })
+          .set({ 
+            content: content, 
+            status: status,
+            ...(blog_title !== undefined && { blog_title }),
+            ...(blog_category !== undefined && { blog_category }),
+            ...(blog_cover_image !== undefined && { blog_cover_image })
+          })
           .where(eq(BlogSchema.blogid, BlogIdInNumber))
           .returning();
 
