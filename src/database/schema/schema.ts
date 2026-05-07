@@ -29,3 +29,10 @@ export const BlogSchema = pgTable("blogs", {
     blog_views : integer('blog_views').default(0),
     blog_cover_image : varchar('blog_cover_image').notNull().default('')
 });
+
+
+export const SavingBlogSchema = pgTable('saving_blog', {
+    blogid : integer('blogid').references(() => BlogSchema.blogid),
+    userid : integer('userid').references(() => AuthSchema.id),
+    save_at : timestamp().defaultNow()
+})

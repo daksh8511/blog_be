@@ -1,0 +1,2 @@
+ALTER TABLE "saving_blog" ADD COLUMN "blog_title" varchar;--> statement-breakpoint
+ALTER TABLE "saving_blog" ADD CONSTRAINT "saving_blog_blog_title_blogs_blog_title_fk" FOREIGN KEY ("blog_title") REFERENCES "public"."blogs"("blog_title") ON DELETE no action ON UPDATE no action;

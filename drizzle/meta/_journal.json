@@ -15,6 +15,27 @@
       "when": 1777722148984,
       "tag": "0001_curvy_ravenous",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778134596289,
+      "tag": "0002_glamorous_supernaut",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1778134729071,
+      "tag": "0003_equal_nextwave",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1778135168060,
+      "tag": "0004_white_cable",
+      "breakpoints": true
     }
   ]
 }
